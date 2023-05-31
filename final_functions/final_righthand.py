@@ -37,7 +37,7 @@ highest_point, lowest_point = find_extreme_points(object_name)
 # print("Highest point coordinates:", highest_point)
 # print("Lowest point coordinates:", lowest_point)
 model_height = highest_point[1] - lowest_point[1]
-print("Model height:", model_height)
+# print("Model height:", model_height)
 
 
 
@@ -105,9 +105,9 @@ arm_edges = 0
 for i in range(len(same_plane_pts)):
     if len(same_plane_pts[keys[i]]) > 50 and keys[i] ==right_most :
         arm_edges = len(same_plane_pts[keys[i]]) 
-        print(keys[i])
+        # print(keys[i])
         
-print(arm_edges)
+# print(arm_edges)
 edge_length = 0.1118421052631579
 print('Circumference of the right bicep is ' , arm_edges * edge_length)
 original_right = 14.5

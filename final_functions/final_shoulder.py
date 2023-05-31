@@ -104,8 +104,8 @@ chest_edges = 0
 for i in range(len(same_plane_pts)):
     if len(same_plane_pts[keys[i]]) > 300 :
         shoulder_edges = len(same_plane_pts[keys[i]])
-        print(len(same_plane_pts[keys[i]]))
-        print(keys[i])
+        # print(len(same_plane_pts[keys[i]]))
+        # print(keys[i])
         
         
 
