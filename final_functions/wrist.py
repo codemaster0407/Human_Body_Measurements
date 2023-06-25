@@ -17,72 +17,73 @@ def find_extreme_points_width(object_name, y_value):
 
 
 ## Import the STL file and select the object
-filepath = "C:\\Users\\schai\\OneDrive\\Desktop\\Course Project\\obj_files\\pup.obj"
-bpy.ops.import_scene.obj(filepath=filepath)
-object_name = "pup"
-obj = bpy.data.objects[object_name]
-obj.select_set(True)
-bpy.context.view_layer.objects.active = obj
+def wrist_function(path, object_name):
+    filepath = path
+    bpy.ops.import_scene.obj(filepath=filepath)
+    
+    obj = bpy.data.objects[object_name]
+    obj.select_set(True)
+    bpy.context.view_layer.objects.active = obj
 
 
-obj = bpy.data.objects[object_name]
-obj.select_set(True)
-bpy.context.view_layer.objects.active = obj
+    obj = bpy.data.objects[object_name]
+    obj.select_set(True)
+    bpy.context.view_layer.objects.active = obj
 
-# Switch to object mode
-bpy.ops.object.mode_set(mode='OBJECT')
+    # Switch to object mode
+    bpy.ops.object.mode_set(mode='OBJECT')
 
-# Set the range size for selecting vertices
-range_size = 0.0001
+    # Set the range size for selecting vertices
+    range_size = 0.0001
 
-highest_point, lowest_point = find_extreme_points(object_name)
-# print("Highest point coordinates:", highest_point)
-# print("Lowest point coordinates:", lowest_point)
-model_height = highest_point[1] - lowest_point[1]
-
-
-
-
-
-
-
-# print("Model height:", model_height)
-
-waistline = highest_point[1] - 0.47*model_height
-chestline = highest_point[1] - 0.284*model_height
-shoulderline = highest_point[1] - 0.246*model_height
-sline = highest_point[1] - 0.22*model_height
-wristline = highest_point[1] - 0.532*model_height
-
-# print("waistline y-axis value: ",waistline)
-# print("chestline y-axis value: ",chestline)
-# print("shoulderline y-axis value: ",shoulderline)
-
-bpy.ops.object.mode_set(mode='EDIT')
+    highest_point, lowest_point = find_extreme_points(object_name)
+    # print("Highest point coordinates:", highest_point)
+    # print("Lowest point coordinates:", lowest_point)
+    model_height = highest_point[1] - lowest_point[1]
 
 
 
 
-bpy.ops.mesh.bisect(plane_co=(19,19, wristline), plane_no=(0, 0, 1), clear_inner=True, clear_outer=False)
-
-bpy.ops.object.mode_set(mode='OBJECT')
-mesh = obj.data
-
-vertices = np.array([v.co for v in mesh.vertices])
-edges = np.array([e.vertices for e in mesh.edges])
-leftmost_point, rightmost_point = find_extreme_points_width(object_name, sline)
-
-# Count the number of vertices between the leftmost and rightmost points
-num_vertices_left = np.sum((vertices[:, 0]<leftmost_point) & (np.abs(vertices[:, 1] - wristline) <= 0.001))
-num_vertices_right = np.sum(((vertices[:, 0] > rightmost_point) & (np.abs(vertices[:, 1] - wristline) <= 0.001)))
-
-# print("Number of vertices between leftmost and rightmost points at waistline:", num_vertices)
-edge_length = 0.1118421052631579
-print('Left wrist circumference is ', num_vertices_left * edge_length)
-print('Right wrist circumference is ',num_vertices_right*edge_length)
 
 
-original_wrist = 6.5
 
-print('error between original and predicted of left wrist' , original_wrist - (num_vertices_left * edge_length))
-print('error between original and predicted of right wrist', original_wrist - (num_vertices_right* edge_length))
+    # print("Model height:", model_height)
+
+    waistline = highest_point[1] - 0.47*model_height
+    chestline = highest_point[1] - 0.284*model_height
+    shoulderline = highest_point[1] - 0.246*model_height
+    sline = highest_point[1] - 0.22*model_height
+    wristline = highest_point[1] - 0.532*model_height
+
+    # print("waistline y-axis value: ",waistline)
+    # print("chestline y-axis value: ",chestline)
+    # print("shoulderline y-axis value: ",shoulderline)
+
+    bpy.ops.object.mode_set(mode='EDIT')
+
+
+
+
+    bpy.ops.mesh.bisect(plane_co=(19,19, wristline), plane_no=(0, 0, 1), clear_inner=True, clear_outer=False)
+
+    bpy.ops.object.mode_set(mode='OBJECT')
+    mesh = obj.data
+
+    vertices = np.array([v.co for v in mesh.vertices])
+    edges = np.array([e.vertices for e in mesh.edges])
+    leftmost_point, rightmost_point = find_extreme_points_width(object_name, sline)
+
+    # Count the number of vertices between the leftmost and rightmost points
+    num_vertices_left = np.sum((vertices[:, 0]<leftmost_point) & (np.abs(vertices[:, 1] - wristline) <= 0.001))
+    num_vertices_right = np.sum(((vertices[:, 0] > rightmost_point) & (np.abs(vertices[:, 1] - wristline) <= 0.001)))
+
+    # print("Number of vertices between leftmost and rightmost points at waistline:", num_vertices)
+    edge_length = 0.1118421052631579
+    print('Left wrist circumference is ', num_vertices_left * edge_length)
+    print('Right wrist circumference is ',num_vertices_right*edge_length)
+
+
+    original_wrist = 6.5
+
+    print('error between original and predicted of left wrist' , original_wrist - (num_vertices_left * edge_length))
+    print('error between original and predicted of right wrist', original_wrist - (num_vertices_right* edge_length))

@@ -19,104 +19,105 @@ def find_extreme_points(object_name):
 
 ## Import the STL file and select the object
 # path = sys.argv[1]
-filepath = "C:\\Users\\schai\\OneDrive\\Desktop\\Course Project\\obj_files\\pup.obj"
-bpy.ops.import_scene.obj(filepath=filepath)
-object_name = "pup"
-obj = bpy.data.objects[object_name]
-obj.select_set(True)
-bpy.context.view_layer.objects.active = obj
+def left_hand_function(path, object_name):
+    filepath = path
+    bpy.ops.import_scene.obj(filepath=filepath)
+
+    obj = bpy.data.objects[object_name]
+    obj.select_set(True)
+    bpy.context.view_layer.objects.active = obj
 
 
-obj = bpy.data.objects[object_name]
-obj.select_set(True)
-bpy.context.view_layer.objects.active = obj
+    obj = bpy.data.objects[object_name]
+    obj.select_set(True)
+    bpy.context.view_layer.objects.active = obj
 
-# Switch to object mode
-bpy.ops.object.mode_set(mode='OBJECT')
+    # Switch to object mode
+    bpy.ops.object.mode_set(mode='OBJECT')
 
-highest_point, lowest_point = find_extreme_points(object_name)
-# print("Highest point coordinates:", highest_point)
-# print("Lowest point coordinates:", lowest_point)
-model_height = highest_point[1] - lowest_point[1]
-# print("Model height:", model_height)
-
-
-
-
-#shoulder line y axis value is being calculated
-waistline = highest_point[1] - 0.47*model_height
-chestline = highest_point[1] - 0.284*model_height
-shoulderline = highest_point[1] - 0.25*model_height
-sline = highest_point[1] - 0.22*model_height
-
-
-# print("waistline y-axis value: ",sline)
-#print("chestline y-axis value: ",chestline)
-#print("shoulderline y-axis value: ",shoulderline)
-
-
-left_most , right_most = find_extreme_points_width(object_name,sline)
-# print("shoulderline y-axis value: ",left_most)
-
-
-bpy.ops.object.mode_set(mode='EDIT')
-bpy.ops.mesh.bisect(plane_co=(left_most,19,19), plane_no=(1,0,0), clear_inner=False, clear_outer=True)
-
-
-
-# Switch to object mode
-bpy.ops.object.mode_set(mode='OBJECT')
+    highest_point, lowest_point = find_extreme_points(object_name)
+    # print("Highest point coordinates:", highest_point)
+    # print("Lowest point coordinates:", lowest_point)
+    model_height = highest_point[1] - lowest_point[1]
+    # print("Model height:", model_height)
 
 
 
 
+    #shoulder line y axis value is being calculated
+    waistline = highest_point[1] - 0.47*model_height
+    chestline = highest_point[1] - 0.284*model_height
+    shoulderline = highest_point[1] - 0.25*model_height
+    sline = highest_point[1] - 0.22*model_height
+
+
+    # print("waistline y-axis value: ",sline)
+    #print("chestline y-axis value: ",chestline)
+    #print("shoulderline y-axis value: ",shoulderline)
+
+
+    left_most , right_most = find_extreme_points_width(object_name,sline)
+    # print("shoulderline y-axis value: ",left_most)
+
+
+    bpy.ops.object.mode_set(mode='EDIT')
+    bpy.ops.mesh.bisect(plane_co=(left_most,19,19), plane_no=(1,0,0), clear_inner=False, clear_outer=True)
 
 
 
-mesh = obj.data
+    # Switch to object mode
+    bpy.ops.object.mode_set(mode='OBJECT')
 
-vertices = np.array([v.co for v in mesh.vertices])
-edges = np.array([e.vertices for e in mesh.edges])
 
-circumferences = []
 
-same_plane_pts = {}
-z_vals = []
 
-# print(len(vertices))
 
-for i in range(len(vertices)):
-    if vertices[i][0] not in z_vals:
-        z_vals.append(vertices[i][0])
 
-z_vals = list(set(z_vals))
-# print(len(z_vals))
 
-for i in range(len(z_vals)):
-    same_plane_pts[z_vals[i]] = []
-    
+    mesh = obj.data
 
-    
-for i in range(len(vertices)):
-    same_plane_pts[vertices[i][0]].append(np.array(vertices[i]))
-    
-keys = list(same_plane_pts.keys())
+    vertices = np.array([v.co for v in mesh.vertices])
+    edges = np.array([e.vertices for e in mesh.edges])
 
-arm_edges = 0
-for i in range(len(same_plane_pts)):
-    if len(same_plane_pts[keys[i]]) > 50 and keys[i] ==left_most :
-        arm_edges = len(same_plane_pts[keys[i]]) 
-        # print(keys[i])
-        
+    circumferences = []
+
+    same_plane_pts = {}
+    z_vals = []
+
+    # print(len(vertices))
+
+    for i in range(len(vertices)):
+        if vertices[i][0] not in z_vals:
+            z_vals.append(vertices[i][0])
+
+    z_vals = list(set(z_vals))
+    # print(len(z_vals))
+
+    for i in range(len(z_vals)):
+        same_plane_pts[z_vals[i]] = []
         
 
-# print(arm_edges)
+        
+    for i in range(len(vertices)):
+        same_plane_pts[vertices[i][0]].append(np.array(vertices[i]))
+        
+    keys = list(same_plane_pts.keys())
 
-edge_length = 0.1118421052631579
+    arm_edges = 0
+    for i in range(len(same_plane_pts)):
+        if len(same_plane_pts[keys[i]]) > 50 and keys[i] ==left_most :
+            arm_edges = len(same_plane_pts[keys[i]]) 
+            # print(keys[i])
+            
+            
 
-print('Left bicep circumference is ' , arm_edges * edge_length)
+    # print(arm_edges)
+
+    edge_length = 0.1118421052631579
+
+    print('Left bicep circumference is ' , arm_edges * edge_length)
 
 
-original_left = 14.9
+    original_left = 14.9
 
-print('error between original and predicted' , original_left - (arm_edges * edge_length))
+    print('error between original and predicted' , original_left - (arm_edges * edge_length))
