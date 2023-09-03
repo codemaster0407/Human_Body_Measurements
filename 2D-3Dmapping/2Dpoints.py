@@ -102,12 +102,9 @@ def normalized_coordinates(path):
     return normalized_coordinates
 
 
-if __name__ == '__main__':
-    path = 
-    
 
-
-
+if __name__=="__main__":
+    print(normalized_coordinates("C:\\Users\\schai\\OneDrive\\Desktop\\Course Project\\Photos\\Reddy\\IMG-20230618-WA0015-removebg-preview.png"))
 
 
 
