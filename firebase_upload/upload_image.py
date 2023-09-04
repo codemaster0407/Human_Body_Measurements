@@ -15,7 +15,7 @@ firebase_admin.initialize_app(cred)
 
 
 # Specify the folder path you want to search
-folder_path = 'Photos\all_photos'
+folder_path = 'Photos\\all_photos'
 
 # Initialize an empty list to store file paths
 file_paths = []
@@ -28,17 +28,27 @@ for root, directories, files in os.walk(folder_path):
 
 
 
+bucket_name = 'gs://measure-3d.appspot.com'
+
+
+# bucket = storage.bucket(bucket_name)
+
 
 for image_path in file_paths:
 
     bucket = storage.bucket()
 
     img_name = list(image_path.split('.'))
+    print(img_name)
     # Destination path within Firebase Storage
-    destination_path = f'Photos\background_remove\{img_name[0]}' 
+    
+    firebase_url = 'https://console.firebase.google.com/u/1/project/measure-3d/database/measure-3d-default-rtdb/data/~2Fbg_removed'
+    destination_path = f'firebase_url/bg_removed/{img_name[0]}' 
 
     blob = bucket.blob(destination_path)
     blob.upload_from_filename(image_path)
+    
+    
 
-    print(f"Image uploaded to {destination_path}")
+    print(f"Image uploaded")
 

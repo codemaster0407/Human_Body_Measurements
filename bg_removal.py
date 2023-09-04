@@ -1,45 +1,75 @@
+def change_path(path):
+    changed_path = path.replace('\\', '\\\\')
+    return changed_path
+# API_KEY = pmhi5tkHFxYshpg2Phz8CvaM
 
 
-import base64
-import io
 import os
+import matplotlib.pyplot as plt
 import requests
-
-url = "https://background-removal.p.rapidapi.com/remove"
-
-payload = {
-	"image_url": "https://objectcut.com/assets/img/raven.jpg",
-	"output_format": "base64",
-	"to_remove": "background"
-}
-headers = {
-	"content-type": "application/x-www-form-urlencoded",
-	"X-RapidAPI-Key": "1f880f30b0msh2fe1b0ddc62d660p1f3885jsn31875a0ee477",
-	"X-RapidAPI-Host": "background-removal.p.rapidapi.com"
-}
-
-response = requests.post(url, data=payload, headers=headers)
-
-# print(response.json())
-
-output = response.json()
-# print(response.json())
+import time
 
 
-import base64
-import io
-import os
+folder_path = 'Photos\\all_photos'
+
+# Initialize an empty list to store file paths
+file_paths = []
+
+# Use os.walk() to traverse the folder and collect file paths
+for root, directories, files in os.walk(folder_path):
+    for filename in files:
+        file_path = os.path.join(root, filename)
+        file_path = change_path(file_path)
+        # print(file_path)
+        file_paths.append(file_path)
 
 
 
-# Decode the base64 string to bytes
-image_bytes = base64.b64decode(output['response']['image_base64'])
+api_key = 'pmhi5tkHFxYshpg2Phz8CvaM'
 
-# Specify the path and filename for the output .png file
-output_path = "output.png"
 
-# Write the bytes to a .png file
-with open(output_path, "wb") as file:
-    file.write(image_bytes)
 
-print(f"Image saved as {output_path}")
+
+
+# for img_path in file_paths:
+#     # print(img_path)
+    
+#     img_name = list(img_path.split('\\'))[4]
+#     print(img_name)
+
+#     response = requests.post(
+# 		'https://api.remove.bg/v1.0/removebg',
+# 		files={'image_file': open(img_path, 'rb')},
+# 		data={'size': 'auto'},
+# 		headers={'X-Api-Key': api_key},
+# 	)
+#     output_path = f'Photos\\background_remove\\'+ str(img_name)
+    
+#     print(output_path)
+#     if response.status_code == requests.codes.ok:
+#         with open(output_path, 'wb') as out:
+#             out.write(response.content)
+#     else:
+#         print("Error:", response.status_code, response.text)
+        
+#     time.sleep(2)
+
+
+
+img_path = 'Photos\\all_photos\\pints.jpg'
+response = requests.post(
+	'https://api.remove.bg/v1.0/removebg',
+	files={'image_file': open(img_path, 'rb')},		
+    data={'size': 'auto'},
+	headers={'X-Api-Key': api_key},
+	)
+output_path = f'Photos\\background_remove\\'+ 'pints.jpg'
+    
+# print(output_path)
+if response.status_code == requests.codes.ok:
+    with open(output_path, 'wb') as out:
+        out.write(response.content)
+else:
+    print("Error:", response.status_code, response.text)
+        
+	
