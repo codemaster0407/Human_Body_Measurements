@@ -97,8 +97,8 @@ def normalized_coordinates(path):
     cv2.circle(image, (coordinates[2][0], coordinates[2][1]), radius=5, color=(255, 0, 0), thickness=-1)
     cv2.circle(image, (coordinates[31][0], coordinates[31][1]), radius=5, color=(255, 0, 0), thickness=-1)
     
-    plt.imshow(image)
-    plt.show()
+    # plt.imshow(image)
+    # plt.show()
     
 
 
@@ -129,65 +129,65 @@ def change_path(path):
 
 
 if __name__=="__main__":
-    # folder_path = 'Photos\\background_remove'
+    folder_path = 'Photos\\background_remove'
 
 
-    # file_paths = []
+    file_paths = []
 
-    # # Use os.walk() to traverse the folder and collect file paths
-    # for root, directories, files in os.walk(folder_path):
-    #     for filename in files:
-    #         file_path = os.path.join(root, filename)
-    #         # file_path = change_path(file_path)
-    #         # print(file_path)
-    #         file_paths.append(file_path)
+    # Use os.walk() to traverse the folder and collect file paths
+    for root, directories, files in os.walk(folder_path):
+        for filename in files:
+            file_path = os.path.join(root, filename)
+            # file_path = change_path(file_path)
+            # print(file_path)
+            file_paths.append(file_path)
             
     
     
-    # # print(file_paths)
+    # print(file_paths)
     
-    # remove_indices = [1, 3, 4, 6, 17,18, 19, 20, 21, 22, 30, 31]
+    remove_indices = [1, 3, 4, 6, 17,18, 19, 20, 21, 22, 30, 31]
 
-    # model_name = []
-    # coordinates_2d = []
-    # for path in file_paths:
-    #     two_dim_coordinates = normalized_coordinates(path)
-    #     filtered_list = [value for index, value in enumerate(two_dim_coordinates) if index not in remove_indices]
-    #     # print(filtered_list[0])
-    #     model_name.append(list(path.split('\\'))[2].split('.')[0])
-    #     coordinates_2d.append(filtered_list)
+    model_name = []
+    coordinates_2d = []
+    for path in file_paths:
+        two_dim_coordinates = normalized_coordinates(path)
+        filtered_list = [value for index, value in enumerate(two_dim_coordinates) if index not in remove_indices]
+        # print(filtered_list[0])
+        model_name.append(list(path.split('\\'))[2].split('.')[0])
+        coordinates_2d.append(filtered_list)
       
+       
         
-        
-    # list_model_name = []
-    # x_coordinates = []
-    # y_coordinates = []
+    list_model_name = []
+    x_coordinates = []
+    y_coordinates = []
     
-    # for index in range(len(coordinates_2d)):
-    #     for pt in coordinates_2d[index]:
-    #         x_coordinates.append(pt[0])
-    #         y_coordinates.append(pt[1])
-    #         list_model_name.append(model_name[index])
+    for index in range(len(coordinates_2d)):
+        for pt in coordinates_2d[index]:
+            x_coordinates.append(pt[0])
+            y_coordinates.append(pt[1])
+            list_model_name.append(model_name[index])
             
-    # data = {
-    #     'model_name' : list_model_name, 
-    #     'x': x_coordinates, 
-    #     'y': y_coordinates
-    # }
+    data = {
+        'model_name' : list_model_name, 
+        'x': x_coordinates, 
+        'y': y_coordinates
+    }
     
-    # df = pd.DataFrame(data)
-    # df.to_csv('2d_dataset.csv')
+    df = pd.DataFrame(data)
+    
+    
         
     
     
-    
-    # print(len(coordinates_2d[0]))
+   
 
  
-    path = 'Photos\\background_remove\\yash.jpg'
-    two_dim = normalized_coordinates(path)
-    # print(len(two_dim))
-    print(two_dim)
+    # path = 'Photos\\background_remove\\yash.jpg'
+    # two_dim = normalized_coordinates(path)
+    # # print(len(two_dim))
+    # print(two_dim)
 
 
 
