@@ -54,10 +54,10 @@ def normalized_coordinates(path, write_to_csv=False, csv_filename=None):
     z_rightmost = int(coordinates[18][2])
     
 
-    cv2.circle(image, (coordinates[17][0], coordinates[17][1]), radius=5, color=(255, 0, 0), thickness=-1)
-    cv2.circle(image, (coordinates[18][0], coordinates[18][1]), radius=5, color=(255, 0, 0), thickness=-1)
-    cv2.circle(image, (coordinates[2][0], coordinates[2][1]), radius=5, color=(255, 0, 0), thickness=-1)
-    cv2.circle(image, (coordinates[31][0], coordinates[31][1]), radius=5, color=(255, 0, 0), thickness=-1)
+    # cv2.circle(image, (coordinates[17][0], coordinates[17][1]), radius=5, color=(255, 0, 0), thickness=-1)
+    # cv2.circle(image, (coordinates[18][0], coordinates[18][1]), radius=5, color=(255, 0, 0), thickness=-1)
+    # cv2.circle(image, (coordinates[2][0], coordinates[2][1]), radius=5, color=(255, 0, 0), thickness=-1)
+    # cv2.circle(image, (coordinates[31][0], coordinates[31][1]), radius=5, color=(255, 0, 0), thickness=-1)
     
     plt.imshow(image)
     plt.show()
@@ -146,7 +146,7 @@ if __name__=="__main__":
     # print(len(coordinates_2d[0]))
 
  
-    path = 'Photos\\background_remove\\yash.jpg'
+    path = 'Photos\\background_remove\\prateeth.jpg'
     two_dim = normalized_coordinates(path)
     # print(len(two_dim))
     print(two_dim)
