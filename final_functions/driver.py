@@ -24,7 +24,7 @@ def split_filename(path):
     
     
 
-path = "C:\\Users\\schai\\OneDrive\\Desktop\\Course Project\\obj_files\\reddy.obj"
+path = "C:\\Users\\schai\\OneDrive\\Desktop\\Course Project\\obj_files\\result_anish_256.obj"
 object_name = split_filename(path)
 
 

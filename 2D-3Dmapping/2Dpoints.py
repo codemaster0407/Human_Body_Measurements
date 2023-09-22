@@ -40,6 +40,8 @@ def normalized_coordinates(path, write_to_csv=False, csv_filename=None):
             # Annotate the landmark points on the image with numerical labels
             cv2.circle(image, (x, y), radius=5, color=(0, 255, 0), thickness=-1)
             cv2.putText(image, str(i), (x, y), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 1, cv2.LINE_AA)
+            
+    # print(x, y, z)
 
     x_max = image.shape[1]
     y_max = image.shape[0]
@@ -59,8 +61,8 @@ def normalized_coordinates(path, write_to_csv=False, csv_filename=None):
     # cv2.circle(image, (coordinates[2][0], coordinates[2][1]), radius=5, color=(255, 0, 0), thickness=-1)
     # cv2.circle(image, (coordinates[31][0], coordinates[31][1]), radius=5, color=(255, 0, 0), thickness=-1)
     
-    plt.imshow(image)
-    plt.show()
+    # plt.imshow(image)
+    # plt.show()
     
 
 
@@ -74,16 +76,19 @@ def normalized_coordinates(path, write_to_csv=False, csv_filename=None):
     normalized_coordinates = []
     for point in coordinates:
         
-        x_norm = (point[0]) / (x_max)
-        y_norm = (point[1]) / (y_max)
+        print(point)
+        
+        # x_norm = (point[0]) / (x_max)
+        # y_norm = (point[1]) / (y_max)
+        # z = z
         # x_norm = point[0]
         # y_norm = point[1]
                        
 
         
-        normalized_coordinates.append([round(x_norm,4), round(y_norm,4)])
+        # normalized_coordinates.append([round(x_norm,4), round(y_norm,4), z])
         
-    return normalized_coordinates
+    # return normalized_coordinates
 
 def change_path(path):
     changed_path = path.replace('\\', '\\\\')
