@@ -75,7 +75,7 @@ filepath = "C:\\Users\\schai\\OneDrive\\Desktop\\Course Project\\obj_files\\yash
 bpy.ops.import_scene.obj(filepath=filepath)
 
     # Specify the object name you want to work with
-object_name = "yash.024"
+object_name = "yash"
 
    
 obj = bpy.data.objects.get(object_name)
@@ -118,10 +118,18 @@ if obj is not None:
     bbox = [obj.matrix_world @ mathutils.Vector(corner) for corner in obj.bound_box]
         
     lowest_y = min(bbox, key=lambda v: v.z)
+#    print(lowest_y[2])
+    
+#    print(type(lowest_y))
 
+    
+#    print(chest_y, lowest_y[2])
     
     
     calculate_edge_lengths(mesh, lowest_y[2])
+    
+    
+    centroid = obj.location
     
     
     
