@@ -28,7 +28,7 @@ def obj_height(mesh):
     min_z = np.min(vertices[:, 1])
     max_z = np.max(vertices[:, 1])
     
-    return max_z - min_z
+    return max_z - min_z, max_z, min_z
 
 
 
@@ -75,7 +75,7 @@ filepath = "C:\\Users\\schai\\OneDrive\\Desktop\\Course Project\\obj_files\\yash
 bpy.ops.import_scene.obj(filepath=filepath)
 
     # Specify the object name you want to work with
-object_name = "yash"
+object_name = "yash.006"
 
    
 obj = bpy.data.objects.get(object_name)
@@ -87,24 +87,35 @@ if obj is not None:
         # Switch to OBJECT mode (in case you're not already in that mode)
     bpy.ops.object.mode_set(mode='OBJECT')
         
-    bbox = [obj.matrix_world @ mathutils.Vector(corner) for corner in obj.bound_box]
+    # bbox = [obj.matrix_world @ mathutils.Vector(corner) for corner in obj.bound_box]
         
-    lowest_point = min(bbox, key=lambda v: v.z)
-    translation_vector = mathutils.Vector((0,0,0)) - lowest_point
-    obj.location += translation_vector
+    # lowest_point = min(bbox, key=lambda v: v.z)
+    # translation_vector = mathutils.Vector((0,0,0)) - lowest_point
+    # obj.location += translation_vector
         
     mesh = obj.data
         
        
 
-    height = obj_height(mesh)
+    height, max_z, min_z = obj_height(mesh)
+    
+    # print(height)
+    # print(0-min_z)
+    
+    # print(((0-min_z)/height)*100)
+    
+    percent_neg = ((0-min_z)/height)
+    
+    remaining_percentage = 0.75- percent_neg
+    
+    chest_y = remaining_percentage * height
 
 
 
     
     
 
-    chest_y = height - 0.33 * height
+    
 
 
 
