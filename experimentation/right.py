@@ -28,7 +28,7 @@ def obj_height(mesh):
     min_z = np.min(vertices[:, 1])
     max_z = np.max(vertices[:, 1])
     
-    return max_z - min_z
+    return max_z - min_z, max_z, min_z
 
 
 
@@ -56,26 +56,17 @@ def calculate_edge_lengths(mesh, target_y):
         total_length += length
         
     print(total_length)
-            
-            
-    
-            
-        
-        
-        
-        
-        
         
 
 
     # Set the file path to your OBJ file
-filepath = "C:\\Users\\sumo\\OneDrive\\Desktop\\Deskotp\\4-1 proj\\Human_Body_Measurements\\obj_files\\anish.obj"
+filepath = "C:\\Users\\sumo\\OneDrive\\Desktop\\Deskotp\\4-1 proj\\Human_Body_Measurements\\obj_files\\chaitanya.obj"
 
     # Import the OBJ file
 bpy.ops.import_scene.obj(filepath=filepath)
 
     # Specify the object name you want to work with
-object_name = "anish.026"
+object_name = "chaitanya.006"
 
    
 obj = bpy.data.objects.get(object_name)
@@ -87,33 +78,55 @@ if obj is not None:
         # Switch to OBJECT mode (in case you're not already in that mode)
     bpy.ops.object.mode_set(mode='OBJECT')
         
-    bbox = [obj.matrix_world @ mathutils.Vector(corner) for corner in obj.bound_box]
+    # bbox = [obj.matrix_world @ mathutils.Vector(corner) for corner in obj.bound_box]
         
-    lowest_point = min(bbox, key=lambda v: v.z)
-    translation_vector = mathutils.Vector((0,0,0)) - lowest_point
-    obj.location += translation_vector
+    # lowest_point = min(bbox, key=lambda v: v.z)
+    # translation_vector = mathutils.Vector((0,0,0)) - lowest_point
+    # obj.location += translation_vector
         
     mesh = obj.data
         
        
 
-    height = obj_height(mesh)
+    height, max_z, min_z = obj_height(mesh)
+    
+    # print(height)
+    # print(0-min_z)
+    
+    # print(((0-min_z)/height)*100)
+    
+    percent_neg = ((0-min_z)/height)
+    
+    remaining_percentage = 0.75- percent_neg
+    
+    chest_y = remaining_percentage * height
 
 
 
     
     
 
-    chest_y = height - 0.33 * height
+    
 
 
 
 
     obj = bpy.data.objects.get(object_name)
+    
+    bpy.ops.object.mode_set(mode='EDIT')   
+    bpy.ops.mesh.bisect(plane_co=(0,-0.15, 0), plane_no=(0, 0, 1), clear_inner=True, clear_outer=False)
+    bpy.ops.object.mode_set(mode='OBJECT')    
+  
+  
+    bpy.context.view_layer.objects.active = obj
     bpy.ops.object.mode_set(mode='EDIT')
-    bpy.ops.mesh.bisect(plane_co=(0.265,0.3, chest_y), plane_no=(1, 0, 0), clear_inner=False, clear_outer=True)
-
+    bpy.ops.mesh.select_all(action='SELECT')
     bpy.ops.object.mode_set(mode='OBJECT')
+    
+    bpy.ops.object.mode_set(mode='EDIT')
+    bpy.ops.mesh.bisect(plane_co=(-0.165,-0.071,chest_y), plane_no=(1, 0, 0), clear_inner=False, clear_outer=True)
+    bpy.ops.object.mode_set(mode='OBJECT')
+    
     
     bbox = [obj.matrix_world @ mathutils.Vector(corner) for corner in obj.bound_box]
         
@@ -129,41 +142,16 @@ if obj is not None:
     calculate_edge_lengths(mesh, lowest_y[2])
     
     
-    centroid = obj.location
-    
-    
-    
-                
 
-      
-        
-        
 
 else:
     print(f"Object '{object_name}' not found.")
-    
-        
-#obj.select_set(True)
-#bpy.context.view_layer.objects.active = obj
 
-## Switch to object mode
-#bpy.ops.object.mode_set(mode='OBJECT')
 
-## Subdivide the mesh
-#subdivision_type = 'SIMPLE'  # You can choose 'SIMPLE', 'CATMULL_CLARK', or 'LOOP' for the subdivision type
-#bpy.ops.object.mode_set(mode='EDIT')
-#bpy.ops.mesh.select_all(action='SELECT')
-#bpy.ops.mesh.subdivide(number_cuts=1, smoothness=0, quadcorner='INNERVERT')
-#bpy.ops.mesh.select_all(action='SELECT')
-#bpy.ops.mesh.subdivide(number_cuts=1, smoothness=0, quadcorner='INNERVERT')
 
-## bpy.ops.object.mode_set(mode='OBJECT')
-##Bisecting the object 
-#bpy.ops.object.mode_set(mode='EDIT')
 
-## Bisect the mesh
-##bpy.ops.mesh.bisect(plane_co=(0.2, 0.2, 0.2), plane_no=(1, 0, 0),use_fill = True, clear_inner=True, clear_outer=False)
-#bpy.ops.mesh.bisect(plane_co=(0.3, 0.3, 0.1), plane_no=(1, 0, 0),use_fill = True, clear_inner=False, clear_outer=True)
-##bpy.ops.mesh.bisect(plane_co=(0.2, 0.2, 0.2), plane_no=(0, 0, 1),use_fill = True, clear_inner=True, clear_outer=False)
-##bpy.ops.mesh.bisect(plane_co=(-0.1, -0.1, -0.1), plane_no=(0, 0, 1),use_fill = True, clear_inner=True, clear_outer=False)
-#bpy.ops.object.mode_set(mode='OBJECT')
+
+
+
+
+
