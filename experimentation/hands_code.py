@@ -32,9 +32,34 @@ def obj_height(mesh):
 
 
 
+def hands_slicing(mesh):
+    
+    select_vertices = [v for v in mesh.vertices if v.select]
+
+    most_right = 100
+    most_left = -100
+
+    for v in select_vertices:
+        if(v.co.x > most_left and v.co.x < 0.25):
+            most_left = v.co.x
+            most_left_idx = v.index
+        if(v.co.x < most_right and v.co.x > -0.25):
+            most_right = v.co.x
+            most_right_idx = v.index
+            
+    # print("left and right: ",most_left,most_right)
+    # print("indexes of the above: ",most_left_idx,most_right_idx)
+    
+    return most_left-0.03, most_right+0.03
+
+
+
 def calculate_edge_lengths(mesh, target_y):
     
     edge_lengths = []
+    
+    left_most, right_most = hands_slicing(mesh)
+    
     for edge in mesh.edges:
         vertex1 = obj.matrix_world @ mesh.vertices[edge.vertices[0]].co
         vertex2 = obj.matrix_world @ mesh.vertices[edge.vertices[1]].co
@@ -42,12 +67,20 @@ def calculate_edge_lengths(mesh, target_y):
         
         y1 = vertex1[2]
         y2 = vertex2[2]
+        x1 = vertex1[0]
+        x2 = vertex2[0]
         
-        if abs(y1 - target_y) < 0.001 and abs(y2-target_y) < 0.001:
-            
-            print(vertex1[2], target_y, vertex2[2])
-            length = (vertex1 - vertex2).length
-            edge_lengths.append(length)
+        
+        if abs(x1-left_most) < 0.001 or abs(x2-right_most) < 0.001 or abs(x1-right_most)<0.001 or abs(x2-left_most)<0.001:
+            # print('Skipping')
+            continue
+        else:
+            if abs(y1 - target_y) < 0.001 and abs(y2-target_y) < 0.001:
+                
+                # print(vertex1[2], target_y, vertex2[2])
+                length = (vertex1 - vertex2).length
+                edge_lengths.append(length)
+        
             
     
     total_length = 0
@@ -55,19 +88,22 @@ def calculate_edge_lengths(mesh, target_y):
     for length in edge_lengths:
         total_length += length
         
-    print(total_length)
+    return total_length
+    
+
+    
         
 
 
     # Set the file path to your OBJ file
-filepath = "C:\\Users\\sumo\\OneDrive\\Desktop\\Deskotp\\4-1 proj\\Human_Body_Measurements\\obj_files\\sreevaatsav.obj"
+filepath = "C:\\Users\\schai\\OneDrive\\Desktop\\Course Project\\obj_files\\prateeth.obj"
 
     # Import the OBJ file
 bpy.ops.import_scene.obj(filepath=filepath)
 
 # Specify the object name you want to work with
 #object_name = "sreevaatsav"
-object_name = "sreevaatsav.003"
+object_name = "prateeth"
 
    
 obj = bpy.data.objects.get(object_name)
@@ -98,7 +134,8 @@ if obj is not None:
     
     percent_neg = ((0-min_z)/height)
     
-    remaining_percentage = 0.75- percent_neg
+    
+    remaining_percentage = 0.5- percent_neg
     
     chest_y = remaining_percentage * height
 
@@ -114,22 +151,19 @@ if obj is not None:
 
     obj = bpy.data.objects.get(object_name)
     bpy.ops.object.mode_set(mode='EDIT')
-    bpy.ops.mesh.bisect(plane_co=(0,-0.15, 0), plane_no=(0, 0, 1), clear_inner=False, clear_outer=False)
+    bpy.ops.mesh.bisect(plane_co=(19,19, chest_y), plane_no=(0, 0, 1), clear_inner=True, clear_outer=False)
 
     bpy.ops.object.mode_set(mode='OBJECT')
     
     bbox = [obj.matrix_world @ mathutils.Vector(corner) for corner in obj.bound_box]
         
     lowest_y = min(bbox, key=lambda v: v.z)
-#    print(lowest_y[2])
-    
-#    print(type(lowest_y))
-
-    
-#    print(chest_y, lowest_y[2])
     
     
-    calculate_edge_lengths(mesh, lowest_y[2])
+    
+    
+    
+    print(calculate_edge_lengths(mesh, lowest_y[2]))
     
     
 
@@ -137,37 +171,37 @@ if obj is not None:
 else:
     print(f"Object '{object_name}' not found.")
 
-select_vertices = [v for v in obj.data.vertices if v.select]
+# select_vertices = [v for v in obj.data.vertices if v.select]
 
-most_right = 100
-most_left = -100
+# most_right = 100
+# most_left = -100
 
-for v in select_vertices:
-    if(v.co.x > most_left and v.co.x < 0.25):
-        most_left = v.co.x
-        most_left_idx = v.index
-    if(v.co.x < most_right and v.co.x > -0.25):
-        most_right = v.co.x
-        most_right_idx = v.index
+# for v in select_vertices:
+#     if(v.co.x > most_left and v.co.x < 0.25):
+#         most_left = v.co.x
+#         most_left_idx = v.index
+#     if(v.co.x < most_right and v.co.x > -0.25):
+#         most_right = v.co.x
+#         most_right_idx = v.index
         
-print("left and right: ",most_left,most_right)
-print("indexes of the above: ",most_left_idx,most_right_idx)
+# print("left and right: ",most_left,most_right)
+# print("indexes of the above: ",most_left_idx,most_right_idx)
 
 
-bpy.context.view_layer.objects.active = obj
-bpy.ops.object.mode_set(mode='EDIT')
-bpy.ops.mesh.select_all(action='SELECT')
-bpy.ops.object.mode_set(mode='OBJECT')
+# bpy.context.view_layer.objects.active = obj
+# bpy.ops.object.mode_set(mode='EDIT')
+# bpy.ops.mesh.select_all(action='SELECT')
+# bpy.ops.object.mode_set(mode='OBJECT')
 
-bpy.ops.object.mode_set(mode='EDIT')
+# bpy.ops.object.mode_set(mode='EDIT')
 
-#For right hand bisection
-#bpy.ops.mesh.bisect(plane_co=(most_right,0,chest_y), plane_no=(1, 0, 0), clear_inner=False, clear_outer=True)
-#For left hand bisection
-bpy.ops.mesh.bisect(plane_co=(most_left,0,chest_y), plane_no=(1, 0, 0), clear_inner=True, clear_outer=False)
+# #For right hand bisection
+# #bpy.ops.mesh.bisect(plane_co=(most_right,0,chest_y), plane_no=(1, 0, 0), clear_inner=False, clear_outer=True)
+# #For left hand bisection
+# bpy.ops.mesh.bisect(plane_co=(most_left,0,chest_y), plane_no=(1, 0, 0), clear_inner=True, clear_outer=False)
 
-bpy.ops.object.mode_set(mode='OBJECT')
-print("chest_y: ",chest_y)
+# bpy.ops.object.mode_set(mode='OBJECT')
+# print("chest_y: ",chest_y)
 
 
 

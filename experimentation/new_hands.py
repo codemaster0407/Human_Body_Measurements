@@ -66,7 +66,7 @@ filepath = "C:\\Users\\sumo\\OneDrive\\Desktop\\Deskotp\\4-1 proj\\Human_Body_Me
 bpy.ops.import_scene.obj(filepath=filepath)
 
 # Specify the object name you want to work with
-object_name = "anish.003"
+object_name = "anish"
 #object_name = "pranay.001"
 
    
