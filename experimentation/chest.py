@@ -96,14 +96,14 @@ def calculate_edge_lengths(mesh, target_y):
 
 
     # Set the file path to your OBJ file
-filepath = "C:\\Users\\schai\\OneDrive\\Desktop\\Course Project\\obj_files\\prateeth.obj"
+filepath = "C:\\Users\\schai\\OneDrive\\Desktop\\Course Project\\obj_files\\yash.obj"
 
     # Import the OBJ file
 bpy.ops.import_scene.obj(filepath=filepath)
 
 # Specify the object name you want to work with
 #object_name = "sreevaatsav"
-object_name = "prateeth"
+object_name = "yash.001"
 
    
 obj = bpy.data.objects.get(object_name)
@@ -135,7 +135,7 @@ if obj is not None:
     percent_neg = ((0-min_z)/height)
     
     
-    remaining_percentage = 0.5- percent_neg
+    remaining_percentage = 0.7- percent_neg
     
     chest_y = remaining_percentage * height
 

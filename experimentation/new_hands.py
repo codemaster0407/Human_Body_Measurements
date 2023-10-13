@@ -133,8 +133,13 @@ filepath = "C:\\Users\\sumo\\OneDrive\\Desktop\\Deskotp\\4-1 proj\\Human_Body_Me
 bpy.ops.import_scene.obj(filepath=filepath)
 
 # Specify the object name you want to work with
+<<<<<<< HEAD
 #object_name = "anish"
 object_name = "anish.008"
+=======
+object_name = "anish"
+#object_name = "pranay.001"
+>>>>>>> b36b52868300e41a32906da7c3f9ac778fa350fa
 
    
 obj = bpy.data.objects.get(object_name)
