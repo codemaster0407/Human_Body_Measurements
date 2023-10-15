@@ -58,7 +58,10 @@ def calculate_edge_lengths(mesh, target_y):
     
     edge_lengths = []
     
-    left_most, right_most = hands_slicing(mesh)
+    right_most, left_most = hands_slicing(mesh)
+    
+    print(left_most, right_most) 
+   
     
     for edge in mesh.edges:
         vertex1 = obj.matrix_world @ mesh.vertices[edge.vertices[0]].co
@@ -70,16 +73,34 @@ def calculate_edge_lengths(mesh, target_y):
         x1 = vertex1[0]
         x2 = vertex2[0]
         
-        
-        if abs(x1-left_most) < 0.001 or abs(x2-right_most) < 0.001 or abs(x1-right_most)<0.001 or abs(x2-left_most)<0.001:
-            # print('Skipping')
+        if x1 < left_most and x2 < left_most:
+#            print('Left')
             continue
-        else:
-            if abs(y1 - target_y) < 0.001 and abs(y2-target_y) < 0.001:
+        elif x1 > right_most and x2>right_most:
+#            print('Right')
+            continue
+        
+        
+        
+        
+        
+        
+        
+        
+
+        
+        
+        
+        
+       
+        if abs(y1 - target_y) < 0.001 and abs(y2-target_y) < 0.001:
                 
-                # print(vertex1[2], target_y, vertex2[2])
-                length = (vertex1 - vertex2).length
-                edge_lengths.append(length)
+            
+            length = (vertex1 - vertex2).length
+            edge_lengths.append(length)
+        
+        
+        
         
             
     
@@ -96,30 +117,24 @@ def calculate_edge_lengths(mesh, target_y):
 
 
     # Set the file path to your OBJ file
-filepath = "C:\\Users\\schai\\OneDrive\\Desktop\\Course Project\\obj_files\\yash.obj"
+filepath = "C:\\Users\\schai\\OneDrive\\Desktop\\Course Project\\obj_files\\prateeth.obj"
 
-    # Import the OBJ file
+  
 bpy.ops.import_scene.obj(filepath=filepath)
 
-# Specify the object name you want to work with
-#object_name = "sreevaatsav"
-object_name = "yash.001"
+object_name = "prateeth.004"
 
    
 obj = bpy.data.objects.get(object_name)
 
-    # Check if the object exists
+    
 if obj is not None:
     bpy.context.view_layer.objects.active = obj
 
-        # Switch to OBJECT mode (in case you're not already in that mode)
+   
     bpy.ops.object.mode_set(mode='OBJECT')
         
-    # bbox = [obj.matrix_world @ mathutils.Vector(corner) for corner in obj.bound_box]
-        
-    # lowest_point = min(bbox, key=lambda v: v.z)
-    # translation_vector = mathutils.Vector((0,0,0)) - lowest_point
-    # obj.location += translation_vector
+   
         
     mesh = obj.data
         
@@ -135,7 +150,7 @@ if obj is not None:
     percent_neg = ((0-min_z)/height)
     
     
-    remaining_percentage = 0.7- percent_neg
+    remaining_percentage = 0.699- percent_neg
     
     chest_y = remaining_percentage * height
 
@@ -163,46 +178,13 @@ if obj is not None:
     
     
     
-    print(calculate_edge_lengths(mesh, lowest_y[2]))
+    print(calculate_edge_lengths(mesh, lowest_y[2]), object_name)
     
     
 
 
 else:
     print(f"Object '{object_name}' not found.")
-
-# select_vertices = [v for v in obj.data.vertices if v.select]
-
-# most_right = 100
-# most_left = -100
-
-# for v in select_vertices:
-#     if(v.co.x > most_left and v.co.x < 0.25):
-#         most_left = v.co.x
-#         most_left_idx = v.index
-#     if(v.co.x < most_right and v.co.x > -0.25):
-#         most_right = v.co.x
-#         most_right_idx = v.index
-        
-# print("left and right: ",most_left,most_right)
-# print("indexes of the above: ",most_left_idx,most_right_idx)
-
-
-# bpy.context.view_layer.objects.active = obj
-# bpy.ops.object.mode_set(mode='EDIT')
-# bpy.ops.mesh.select_all(action='SELECT')
-# bpy.ops.object.mode_set(mode='OBJECT')
-
-# bpy.ops.object.mode_set(mode='EDIT')
-
-# #For right hand bisection
-# #bpy.ops.mesh.bisect(plane_co=(most_right,0,chest_y), plane_no=(1, 0, 0), clear_inner=False, clear_outer=True)
-# #For left hand bisection
-# bpy.ops.mesh.bisect(plane_co=(most_left,0,chest_y), plane_no=(1, 0, 0), clear_inner=True, clear_outer=False)
-
-# bpy.ops.object.mode_set(mode='OBJECT')
-# print("chest_y: ",chest_y)
-
 
 
 

@@ -83,9 +83,7 @@ def hands_left(obj,chest_y):
 
     bpy.ops.object.mode_set(mode='EDIT')
 
-    #For right hand bisection
-    # bpy.ops.mesh.bisect(plane_co=(most_right - 0.03,0,chest_y), plane_no=(1, 0, 0), clear_inner=False, clear_outer=True)
-    #For left hand bisection
+ 
     bpy.ops.mesh.bisect(plane_co=(most_left + 0.03,0,chest_y), plane_no=(1, 0, 0), clear_inner=True, clear_outer=False)
 
     bpy.ops.object.mode_set(mode='OBJECT')
@@ -119,8 +117,7 @@ def hands_right(obj,chest_y):
 
     #For right hand bisection
     bpy.ops.mesh.bisect(plane_co=(most_right - 0.03,0,chest_y), plane_no=(1, 0, 0), clear_inner=False, clear_outer=True)
-    #For left hand bisection
-    #bpy.ops.mesh.bisect(plane_co=(most_left + 0.03,0,chest_y), plane_no=(1, 0, 0), clear_inner=True, clear_outer=False)
+    
 
     bpy.ops.object.mode_set(mode='OBJECT')
     # print("chest_y: ",chest_y)

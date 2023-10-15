@@ -46,7 +46,7 @@ def hands_slicing(mesh):
         if(v.co.x < most_right and v.co.x > -0.25):
             most_right = v.co.x
             most_right_idx = v.index
-            
+    
     # print("left and right: ",most_left,most_right)
     # print("indexes of the above: ",most_left_idx,most_right_idx)
     

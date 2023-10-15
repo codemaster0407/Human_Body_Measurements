@@ -56,10 +56,9 @@ def calculate_edge_lengths(mesh, target_y):
         total_length += length
         
     print(total_length)
-            
-            
 
-def hands_slicing(obj):
+
+def hands_left(obj,chest_y):
     select_vertices = [v for v in obj.data.vertices if v.select]
 
     most_right = 100
@@ -75,42 +74,72 @@ def hands_slicing(obj):
             
     print("left and right: ",most_left,most_right)
     print("indexes of the above: ",most_left_idx,most_right_idx)
-    
-    return most_left+-0.03, most_right-0.03
 
 
-    # bpy.context.view_layer.objects.active = obj
-    # bpy.ops.object.mode_set(mode='EDIT')
-    # bpy.ops.mesh.select_all(action='SELECT')
-    # bpy.ops.object.mode_set(mode='OBJECT')
+    bpy.context.view_layer.objects.active = obj
+    bpy.ops.object.mode_set(mode='EDIT')
+    bpy.ops.mesh.select_all(action='SELECT')
+    bpy.ops.object.mode_set(mode='OBJECT')
 
-    # bpy.ops.object.mode_set(mode='EDIT')
+    bpy.ops.object.mode_set(mode='EDIT')
 
     #For right hand bisection
     # bpy.ops.mesh.bisect(plane_co=(most_right - 0.03,0,chest_y), plane_no=(1, 0, 0), clear_inner=False, clear_outer=True)
-    # bpy.ops.mesh_fill()
-    # #For left hand bisection
-    # bpy.ops.mesh.bisect(plane_co=(most_left + 0.03,0,chest_y), plane_no=(1, 0, 0), clear_inner=False, clear_outer=True)
-    # bpy.ops.mesh_fill()
+    #For left hand bisection
+    bpy.ops.mesh.bisect(plane_co=(most_left + 0.03,0,chest_y), plane_no=(1, 0, 0), clear_inner=True, clear_outer=False)
 
-    # bpy.ops.object.mode_set(mode='OBJECT')
-                
+    bpy.ops.object.mode_set(mode='OBJECT')
+    print("hell yeah")
+
+
+def hands_right(obj,chest_y):
+    select_vertices = [v for v in obj.data.vertices if v.select]
+
+    most_right = 100
+    most_left = -100
+
+    for v in select_vertices:
+        if(v.co.x > most_left and v.co.x < 0.25):
+            most_left = v.co.x
+            most_left_idx = v.index
+        if(v.co.x < most_right and v.co.x > -0.25):
+            most_right = v.co.x
+            most_right_idx = v.index
             
-        
-        
-        
-        
-        
+    print("left and right: ",most_left,most_right)
+    print("indexes of the above: ",most_left_idx,most_right_idx)
+
+
+    bpy.context.view_layer.objects.active = obj
+    bpy.ops.object.mode_set(mode='EDIT')
+    bpy.ops.mesh.select_all(action='SELECT')
+    bpy.ops.object.mode_set(mode='OBJECT')
+
+    bpy.ops.object.mode_set(mode='EDIT')
+
+    #For right hand bisection
+    bpy.ops.mesh.bisect(plane_co=(most_right - 0.03,0,chest_y), plane_no=(1, 0, 0), clear_inner=False, clear_outer=True)
+    #For left hand bisection
+    #bpy.ops.mesh.bisect(plane_co=(most_left + 0.03,0,chest_y), plane_no=(1, 0, 0), clear_inner=True, clear_outer=False)
+
+    bpy.ops.object.mode_set(mode='OBJECT')
+    # print("chest_y: ",chest_y)
 
 
     # Set the file path to your OBJ file
-filepath = "C:\\Users\\schai\\OneDrive\\Desktop\\Course Project\\obj_files\\yash.obj"
+filepath = "C:\\Users\\sumo\\OneDrive\\Desktop\\Deskotp\\4-1 proj\\Human_Body_Measurements\\obj_files\\anish.obj"
 
     # Import the OBJ file
 bpy.ops.import_scene.obj(filepath=filepath)
 
-    # Specify the object name you want to work with
-object_name = "yash"
+# Specify the object name you want to work with
+<<<<<<< HEAD
+#object_name = "anish"
+object_name = "anish.008"
+=======
+object_name = "anish"
+#object_name = "pranay.001"
+>>>>>>> b36b52868300e41a32906da7c3f9ac778fa350fa
 
    
 obj = bpy.data.objects.get(object_name)
@@ -119,7 +148,7 @@ obj = bpy.data.objects.get(object_name)
 if obj is not None:
     bpy.context.view_layer.objects.active = obj
 
-        # Switch to OBJECT mode (in case you're not already in that mode)
+    # Switch to OBJECT mode (in case you're not already in that mode)
     bpy.ops.object.mode_set(mode='OBJECT')
         
     # bbox = [obj.matrix_world @ mathutils.Vector(corner) for corner in obj.bound_box]
@@ -157,7 +186,7 @@ if obj is not None:
 
     obj = bpy.data.objects.get(object_name)
     bpy.ops.object.mode_set(mode='EDIT')
-    bpy.ops.mesh.bisect(plane_co=(19,19, chest_y), plane_no=(0, 0, 1), clear_inner=True, clear_outer=False)
+    bpy.ops.mesh.bisect(plane_co=(0,-0.15, 0), plane_no=(0, 0, 1), clear_inner=False, clear_outer=False)
 
     bpy.ops.object.mode_set(mode='OBJECT')
     
@@ -173,17 +202,16 @@ if obj is not None:
     
     
     calculate_edge_lengths(mesh, lowest_y[2])
+    hands_left(obj,chest_y)
+    # hands_right(obj,chest_y) # can only bisect one of the hands at a time.
     
-    
-    
-                
 
-      
-        
-        
 
 else:
     print(f"Object '{object_name}' not found.")
+
+
+
 
 
 
