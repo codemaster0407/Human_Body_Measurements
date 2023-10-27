@@ -26,28 +26,59 @@ path_dir = './obj_files/'
 obj_file_list = os.listdir('./obj_files')
 
 
-shoulder_ms_list = []
-names = []
+# shoulder_ms_list = []
+# chest_ms_list = []
+waist_ms_list = []
+
+
+
+
+
 for file in obj_file_list:
-    path = path_dir + file 
+    path= path_dir + file 
     object_name = file.split('.')[0]
-    # print(path, object_name)
-    names.append(object_name)
-    
     try: 
-        shoulder_measurement = shoulder.calculate_shoulder(path, object_name)
-        shoulder_ms_list.append(shoulder_measurement)
-    except:
+        waist_measurement = waist.calculate_waist(path, object_name)
+        waist_ms_list.append(waist_measurement) 
+    except: 
         print('File not found')
 
 
-data = {
-    'names': names, 
-    'shoulder_measurement': shoulder_ms_list 
-}
+df = pd.read_csv('blender_measurements.csv') 
+df['waist measurement'] = waist_ms_list 
 
-df = pd.DataFrame(data)
+
 df.to_csv('blender_measurements.csv')
+
+
+# names = []
+# for file in obj_file_list:
+#     path = path_dir + file 
+#     object_name = file.split('.')[0]
+#     print(path, object_name)
+#     names.append(object_name)
+    
+#     try: 
+#         shoulder_measurement = shoulder.calculate_shoulder(path, object_name)
+#         # chest_measurement = chest.calculate_chest(path, object_name)
+#         # waist_measurement = waist.calculate_waist(path, object_name)
+        
+     
+#         shoulder_ms_list.append(shoulder_measurement)
+#         # waist_ms_list.append(waist_measurement)
+#         # chest_ms_list.append(chest_measurement)
+#     except:
+#         print('File not found')
+
+# shoulder_measurement = shoulder.calculate_shoulder('./obj_files/sunil.obj', "sunil")
+# print(shoulder_measurement)  
+
+# chest_measurement = chest.calculate_chest('./obj_files/sunil.obj', "sunil")
+# print(chest_measurement)
+
+# shoulder_measurement = shoulder.calculate_shoulder('./obj_files/sunil.obj', "sunil")
+# print(shoulder_measurement)  
+    
 
 
 

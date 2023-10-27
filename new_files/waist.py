@@ -10,8 +10,8 @@ def obj_height(mesh):
     num_edges = len(mesh.edges)
     num_vertices = len(mesh.vertices)
 
-    print("Number of Edges:", num_edges)
-    print("Number of Vertices:", num_vertices)
+    # print("Number of Edges:", num_edges)
+    # print("Number of Vertices:", num_vertices)
 
     vertices = np.zeros((len(mesh.vertices), 3))
     for i, vertex in enumerate(mesh.vertices):
@@ -67,18 +67,17 @@ def calculate_edge_lengths(mesh, target_y, obj):
         x2 = vertex2[0]
         
         
-        if x1 < left_most and x2 < left_most:
+        if x1 < left_most:
+            continue
+        if x1 > right_most:
 
             continue
-        elif x1 > right_most and x2>right_most:
-
-            continue
-        else:
-            if abs(y1 - target_y) < 0.0000000001 and abs(y2-target_y) < 0.0000000001:
+      
+        if abs(y1 - target_y) < 0.00001 and abs(y2-target_y) < 0.00001:
                 
-                # print(vertex1[2], target_y, vertex2[2])
-                length = (vertex1 - vertex2).length
-                edge_lengths.append(length)
+            # print(vertex1[2], target_y, vertex2[2])
+            length = (vertex1 - vertex2).length
+            edge_lengths.append(length)
         
             
     
@@ -86,6 +85,8 @@ def calculate_edge_lengths(mesh, target_y, obj):
     
     for length in edge_lengths:
         total_length += length
+        
+    # print(f'Function output : {total_length}')
         
     return total_length
     
@@ -95,7 +96,7 @@ def calculate_edge_lengths(mesh, target_y, obj):
 
 
 def calculate_waist(filepath, object_name):
-    
+    print(filepath, object_name)
     bpy.ops.import_scene.obj(filepath=filepath)
 
     
@@ -141,15 +142,18 @@ def calculate_waist(filepath, object_name):
 
         bpy.ops.object.mode_set(mode='OBJECT')
         
-        # bbox = [obj.matrix_world @ mathutils.Vector(corner) for corner in obj.bound_box]
-            
+     
         
         
         
+        # print(calculate_edge_lengths(mesh, chest_y, obj))
         
         
+        waist_length =  (calculate_edge_lengths(mesh, chest_y, obj))
         
-        return (calculate_edge_lengths(mesh, chest_y, obj))
+      
+        
+        return waist_length
         
 
 

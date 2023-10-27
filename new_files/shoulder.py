@@ -53,6 +53,9 @@ def calculate_edge_lengths(mesh, target_y, obj):
     for length in edge_lengths:
         total_length += length
         
+        
+    print(f'Function output : {total_length}')
+        
     return total_length
             
             
@@ -85,6 +88,8 @@ def hands_slicing(obj):
 
 
 def calculate_shoulder(filepath, object_name):
+    
+    print(filepath, object_name)
     
     bpy.ops.import_scene.obj(filepath=filepath)
 
@@ -128,13 +133,15 @@ def calculate_shoulder(filepath, object_name):
         bpy.ops.mesh.bisect(plane_co=(19,19, chest_y), plane_no=(0, 0, 1), clear_inner=True, clear_outer=False)
 
         bpy.ops.object.mode_set(mode='OBJECT')
-        
-        # bbox = [obj.matrix_world @ mathutils.Vector(corner) for corner in obj.bound_box]
+
             
         
   
         
-        return calculate_edge_lengths(mesh, chest_y, obj)
+        shoulder_length = calculate_edge_lengths(mesh, chest_y, obj)
+        
+        
+        return shoulder_length
         
         
 
@@ -143,3 +150,7 @@ def calculate_shoulder(filepath, object_name):
 
 
 
+# path = "C:\\Users\\schai\\OneDrive\\Desktop\\Course Project\\obj_files\\srikar.obj"
+# object_name = 'srikar'
+
+# print(calculate_shoulder(path, object_name))

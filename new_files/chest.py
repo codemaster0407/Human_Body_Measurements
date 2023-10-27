@@ -69,21 +69,20 @@ def calculate_edge_lengths(mesh, target_y, obj):
         
         
         
-        if x1 < left_most and x2 < left_most:
+        if x1 < left_most:
 
             continue
-        elif x1 > right_most and x2>right_most:
+        elif x1 > right_most:
 
             continue
      
         
         
         
-        
-        
+        total_length = 0
+    
         if abs(y1 - target_y) < 0.00001 and abs(y2-target_y) < 0.00001:
                 
-            
             length = (vertex1 - vertex2).length
             edge_lengths.append(length)
         
@@ -94,6 +93,9 @@ def calculate_edge_lengths(mesh, target_y, obj):
     for length in edge_lengths:
         total_length += length
         
+    # print(total_length)
+    # print(f'Function output : {total_length}')
+        
     return total_length
     
 
@@ -101,8 +103,11 @@ def calculate_edge_lengths(mesh, target_y, obj):
         
 
 
-def calculate_chest(filepath, object_name):
+def calculate_chest(filepath, object_name, actual_height):
+    print(filepath, object_name)
 
+    
+    print(filepath, object_name)
 
     bpy.ops.import_scene.obj(filepath=filepath)
 
@@ -123,8 +128,14 @@ def calculate_chest(filepath, object_name):
         
 
         height, max_z, min_z = obj_height(mesh)
-      
         
+        
+        
+        #1Blender metric distance real time calculation 
+        
+        bm_1 = actual_height / height
+      
+        print(height)
         percent_neg = ((0-min_z)/height)
         
         
@@ -145,13 +156,20 @@ def calculate_chest(filepath, object_name):
         
 
         
-        return calculate_edge_lengths(mesh, chest_y, obj)
+        chest_length =  calculate_edge_lengths(mesh, chest_y, obj)
+        
+        # print(chest_length)
+        return chest_length * bm_1
+    
         
         
 
 
 
-
+path = "C:\\Users\\schai\\OneDrive\\Desktop\\Course Project\\obj_files\\chaitanya.obj"
+object_name = 'chaitanya'
+actual_height = 68
+print(calculate_chest(path, object_name, actual_height))
 
 
 
