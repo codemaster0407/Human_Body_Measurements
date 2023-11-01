@@ -87,7 +87,7 @@ def hands_slicing(obj):
         
 
 
-def calculate_shoulder(filepath, object_name):
+def calculate_shoulder(filepath, object_name, bm_1):
     
     print(filepath, object_name)
     
@@ -95,6 +95,12 @@ def calculate_shoulder(filepath, object_name):
 
 
     obj = bpy.data.objects.get(object_name)
+    
+            
+      
+   
+    
+        
 
      
     if obj is not None:
@@ -110,7 +116,6 @@ def calculate_shoulder(filepath, object_name):
 
         height, max_z, min_z = obj_height(mesh)
         
-    
         
         percent_neg = ((0-min_z)/height)
         
@@ -141,7 +146,7 @@ def calculate_shoulder(filepath, object_name):
         shoulder_length = calculate_edge_lengths(mesh, chest_y, obj)
         
         
-        return shoulder_length
+        return shoulder_length * bm_1
         
         
 
@@ -150,7 +155,8 @@ def calculate_shoulder(filepath, object_name):
 
 
 
-# path = "C:\\Users\\schai\\OneDrive\\Desktop\\Course Project\\obj_files\\srikar.obj"
-# object_name = 'srikar'
+# path = "C:\\Users\\schai\\OneDrive\\Desktop\\Course Project\\obj_files\\anish.obj"
+# object_name = 'anish'
+# actual_height = 69
 
-# print(calculate_shoulder(path, object_name))
+# print(calculate_shoulder(path, object_name, actual_height))

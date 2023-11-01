@@ -95,7 +95,7 @@ def calculate_edge_lengths(mesh, target_y, obj):
         
 
 
-def calculate_waist(filepath, object_name):
+def calculate_waist(filepath, object_name, bm_1):
     print(filepath, object_name)
     bpy.ops.import_scene.obj(filepath=filepath)
 
@@ -116,6 +116,7 @@ def calculate_waist(filepath, object_name):
         
 
         height, max_z, min_z = obj_height(mesh)
+        
         
 
         
@@ -153,11 +154,16 @@ def calculate_waist(filepath, object_name):
         
       
         
-        return waist_length
+        return waist_length * bm_1
         
 
 
 
+# path = "C:\\Users\\schai\\OneDrive\\Desktop\\Course Project\\obj_files\\anish.obj"
+# object_name = 'anish'
+# actual_height = 68
+
+# print(calculate_waist(path, object_name, actual_height))
 
 
 

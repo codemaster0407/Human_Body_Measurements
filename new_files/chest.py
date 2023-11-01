@@ -103,11 +103,11 @@ def calculate_edge_lengths(mesh, target_y, obj):
         
 
 
-def calculate_chest(filepath, object_name, actual_height):
-    print(filepath, object_name)
+def calculate_chest(filepath, object_name, bm_1):
+    # print(filepath, object_name)
 
     
-    print(filepath, object_name)
+    # print(filepath, object_name)
 
     bpy.ops.import_scene.obj(filepath=filepath)
 
@@ -133,9 +133,9 @@ def calculate_chest(filepath, object_name, actual_height):
         
         #1Blender metric distance real time calculation 
         
-        bm_1 = actual_height / height
-      
-        print(height)
+        
+        
+        # print(height)
         percent_neg = ((0-min_z)/height)
         
         
@@ -166,10 +166,10 @@ def calculate_chest(filepath, object_name, actual_height):
 
 
 
-path = "C:\\Users\\schai\\OneDrive\\Desktop\\Course Project\\obj_files\\chaitanya.obj"
-object_name = 'chaitanya'
-actual_height = 68
-print(calculate_chest(path, object_name, actual_height))
+# path = "C:\\Users\\schai\\OneDrive\\Desktop\\Course Project\\obj_files\\anish.obj"
+# object_name = 'anish'
+# actual_height = 68
+# print(calculate_chest(path, object_name, actual_height))
 
 
 
