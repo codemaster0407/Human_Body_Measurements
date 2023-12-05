@@ -1,0 +1,17 @@
+,Name,Chest,Waist,Shoulder,Left Bicep,Right Bicep,Left Elbow,Right Elbow ,Left Wrist,Right Wrist ,Left Thigh,Right Thigh,Height (in inches),obj_path
+0,anish,34.5,27.7,42.0,10.7,11.5,10.4,10.5,6.5,6.8,22.2,22.5,,./obj_files/anish.obj
+1,chaitanya,34.0,31.5,41.1,11.3,12.0,9.6,9.5,6.2,6.2,,,,./obj_files/chaitanya.obj
+2,fawaz,30.7,27.6,41.0,9.5,9.5,9.5,9.5,6.0,6.0,17.9,18.2,,./obj_files/fawaz.obj
+3,phalguna,35.5,32.6,43.2,10.5,12.5,10.1,10.2,6.6,6.5,17.5,18.0,,./obj_files/phalguna.obj
+4,pradham,37.0,32.0,42.4,12.0,12.0,9.8,9.8,6.0,5.8,22.5,23.0,66.5,./obj_files/pradham.obj
+5,pranay,35.0,35.0,43.0,11.0,11.0,11.0,11.0,7.0,7.0,15.0,14.0,,./obj_files/pranay.obj
+6,prateeth,38.5,35.0,45.0,14.5,15.5,11.5,11.1,6.9,6.9,22.0,21.8,,./obj_files/prateeth.obj
+7,reddy,37.2,35.0,45.2,12.5,13.0,10.0,10.5,6.5,6.7,23.4,23.4,,./obj_files/reddy.obj
+8,sreevaatsav,37.0,32.0,41.0,12.6,12.5,9.8,9.7,6.3,6.4,19.0,19.0,,./obj_files/sreevaatsav.obj
+9,srikar,43.5,44.0,45.7,13.1,13.0,11.5,11.6,6.9,7.0,26.0,26.0,73,./obj_files/srikar.obj
+10,srinath,35.5,35.0,42.0,10.9,11.0,9.7,10.0,5.8,5.8,22.5,23.0,71,./obj_files/srinath.obj
+11,suchir,38.6,38.0,43.5,11.8,11.0,9.4,9.2,5.8,5.8,21.8,22.1,69,./obj_files/suchir.obj
+12,sunil,31.5,29.0,40.5,9.7,9.5,9.0,9.0,6.2,6.2,17.2,17.5,,./obj_files/sunil.obj
+13,tharun,38.8,36.0,43.1,11.5,11.5,10.6,10.7,6.7,6.7,23.4,23.4,,./obj_files/tharun.obj
+14,vivek,45.0,42.0,46.5,12.5,12.8,11.5,11.9,7.0,7.4,27.0,26.7,,./obj_files/vivek.obj
+15,yash,27.9,24.0,35.5,7.3,7.5,7.5,7.5,5.2,5.2,14.0,14.5,,./obj_files/yash.obj
