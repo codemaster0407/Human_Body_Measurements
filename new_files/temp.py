@@ -48,7 +48,7 @@ def calculate_edge_lengths(mesh, target_y, obj):
         if math.isclose(y1, target_y, rel_tol=1e-7) and math.isclose(y2, target_y, rel_tol=1e-7):
             
         # if abs(y1 - target_y) < 0.00000001 and abs(y2-target_y) < 0.00000001 :
-            print(y1, y2, target_y)
+            # print(y1, y2, target_y)
             length = (vertex1 - vertex2).length
             edge_lengths.append(length)
             

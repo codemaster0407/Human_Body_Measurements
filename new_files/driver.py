@@ -36,10 +36,10 @@ path = 'obj_files\\anish.obj'
 
 object_name = 'anish'
 
-bm_1 = distance_conversion.convert_to_inches(path, object_name, actual_height)
-print(f'Conversion metric from blender to inches is {bm_1}')
-waist_measurement = waist.calculate_waist(path, object_name, bm_1)
-print(f'Waist measurement in inches is {waist_measurement}')
+# bm_1 = distance_conversion.convert_to_inches(path, object_name, actual_height)
+# print(f'Conversion metric from blender to inches is {bm_1}')
+# waist_measurement = waist.calculate_waist(path, object_name, bm_1)
+# print(f'Waist measurement in inches is {waist_measurement}')
 
 
 # print(waist_measurement)
