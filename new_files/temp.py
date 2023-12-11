@@ -45,10 +45,10 @@ def calculate_edge_lengths(mesh, target_y, obj):
         
         y1 = vertex1[2]
         y2 = vertex2[2]
-        count_outer += 1
-        if abs(y1 - target_y) < 0.00001 and abs(y2-target_y) < 0.00001:
+        if math.isclose(y1, target_y, rel_tol=1e-7) and math.isclose(y2, target_y, rel_tol=1e-7):
             
-            count_enter+= 1
+        # if abs(y1 - target_y) < 0.00000001 and abs(y2-target_y) < 0.00000001 :
+            # print(y1, y2, target_y)
             length = (vertex1 - vertex2).length
             edge_lengths.append(length)
             
@@ -60,7 +60,7 @@ def calculate_edge_lengths(mesh, target_y, obj):
         
         
     print(f'Function output : {total_length}')
-    print(counter_enter, count_outer)
+    
         
     return total_length
             
@@ -90,12 +90,13 @@ def hands_slicing(obj):
         
         
         
-        
+# def mapping_constant(original_height, model_height):
+      
 
 
-def calculate_shoulder(filepath, object_name, bm_1):
+def calculate_shoulder(filepath, object_name, original_height):
     
-    print(filepath, object_name)
+    # print(filepath, object_name)
     
     bpy.ops.import_scene.obj(filepath=filepath)
 
@@ -127,7 +128,7 @@ def calculate_shoulder(filepath, object_name, bm_1):
         
         remaining_percentage = 0.758- percent_neg
         
-        chest_y = remaining_percentage * height
+        shoulder_y = remaining_percentage * height
 
 
 
@@ -141,28 +142,29 @@ def calculate_shoulder(filepath, object_name, bm_1):
 
         obj = bpy.data.objects.get(object_name)
         bpy.ops.object.mode_set(mode='EDIT')
-        bpy.ops.mesh.bisect(plane_co=(19,19, chest_y), plane_no=(0, 0, 1), clear_inner=True, clear_outer=False)
+        bpy.ops.mesh.bisect(plane_co=(19,19, shoulder_y), plane_no=(0, 0, 1), clear_inner=True, clear_outer=False)
 
         bpy.ops.object.mode_set(mode='OBJECT')
 
             
         
   
+        mesh = obj.data
         
-        shoulder_length = calculate_edge_lengths(mesh, chest_y, obj)
+        shoulder_length = calculate_edge_lengths(mesh, shoulder_y, obj)
         
+        one_metric = original_height / height
+        return shoulder_length * one_metric
         
-        return shoulder_length * bm_1
-        
-        
-
-
         
 
 
+        
 
-path = "C:\\Users\\schai\\OneDrive\\Desktop\\Course Project\\obj_files\\chaitanya.obj"
-object_name = 'chaitanya'
-actual_height = 69
+
+
+path = "C:\\Users\\schai\\OneDrive\\Desktop\\Course Project\\obj_files\\anish.obj"
+object_name = 'anish'
+actual_height = 68
 
 print(calculate_shoulder(path, object_name, actual_height))

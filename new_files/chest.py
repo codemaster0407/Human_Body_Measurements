@@ -51,54 +51,22 @@ def hands_slicing(mesh):
 
 
 def calculate_edge_lengths(mesh, target_y, obj):
-    
-    edge_lengths = []
-    
-    right_most, left_most = hands_slicing(mesh)
-
-   
+    # print(target_y)
+    edge_count = 0
     for edge in mesh.edges:
         vertex1 = obj.matrix_world @ mesh.vertices[edge.vertices[0]].co
         vertex2 = obj.matrix_world @ mesh.vertices[edge.vertices[1]].co
         
+        y1 = vertex1[1]
+        y2 = vertex2[1]
         
-        y1 = vertex1[2]
-        y2 = vertex2[2]
-        x1 = vertex1[0]
-        x2 = vertex2[0]
-        
-        
-        
-        if x1 < left_most:
-
-            continue
-        elif x1 > right_most:
-
-            continue
-     
-        
-        
-        
-        total_length = 0
-    
-        if abs(y1 - target_y) < 0.00001 and abs(y2-target_y) < 0.00001:
-                
-            length = (vertex1 - vertex2).length
-            edge_lengths.append(length)
-        
+        if y1 == target_y :
+            # print('Count of edges')
+            edge_count += 1 
             
+        break
     
-    total_length = 0
-    
-    for length in edge_lengths:
-        total_length += length
-        
-    # print(total_length)
-    # print(f'Function output : {total_length}')
-        
-    return total_length
-    
-
+    print(f'Count of edges : {edge_count}')
     
         
 
@@ -143,7 +111,7 @@ def calculate_chest(filepath, object_name, bm_1):
         
         chest_y = remaining_percentage * height
         
-
+        
         obj = bpy.data.objects.get(object_name)
         bpy.ops.object.mode_set(mode='EDIT')
         bpy.ops.mesh.bisect(plane_co=(19,19, chest_y), plane_no=(0, 0, 1), clear_inner=True, clear_outer=False)
@@ -166,10 +134,10 @@ def calculate_chest(filepath, object_name, bm_1):
 
 
 
-# path = "C:\\Users\\schai\\OneDrive\\Desktop\\Course Project\\obj_files\\anish.obj"
-# object_name = 'anish'
-# actual_height = 68
-# print(calculate_chest(path, object_name, actual_height))
+path = "C:\\Users\\schai\\OneDrive\\Desktop\\Course Project\\obj_files\\anish.obj"
+object_name = 'anish'
+actual_height = 68
+print(calculate_chest(path, object_name, actual_height))
 
 
 
