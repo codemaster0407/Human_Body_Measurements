@@ -60,7 +60,7 @@ def calculate_edge_lengths(mesh, target_y, obj):
         
         
     print(f'Function output : {total_length}')
-    print(counter_enter, count_outer)
+    # print(counter_enter, count_outer)
         
     return total_length
             

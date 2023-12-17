@@ -159,11 +159,11 @@ def calculate_waist(filepath, object_name, bm_1):
 
 
 
-# path = "C:\\Users\\schai\\OneDrive\\Desktop\\Course Project\\obj_files\\anish.obj"
-# object_name = 'anish'
-# actual_height = 68
+path = "C:\\Users\\schai\\OneDrive\\Desktop\\Course Project\\obj_files\\anish.obj"
+object_name = 'anish'
+actual_height = 68
 
-# print(calculate_waist(path, object_name, actual_height))
+print(calculate_waist(path, object_name, actual_height))
 
 
 

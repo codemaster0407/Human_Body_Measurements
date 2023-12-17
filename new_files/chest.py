@@ -51,27 +51,46 @@ def hands_slicing(mesh):
 
 
 def calculate_edge_lengths(mesh, target_y, obj):
-    # print(target_y)
-    edge_count = 0
+    edge_lengths = []
+    right, left = hands_slicing(mesh)
+    
+    print(left, right)
+    
     for edge in mesh.edges:
         vertex1 = obj.matrix_world @ mesh.vertices[edge.vertices[0]].co
         vertex2 = obj.matrix_world @ mesh.vertices[edge.vertices[1]].co
         
-        y1 = vertex1[1]
-        y2 = vertex2[1]
         
-        if y1 == target_y :
-            # print('Count of edges')
-            edge_count += 1 
+        y1 = vertex1[2]
+        y2 = vertex2[2]
+        
+        
+        x1 = vertex1[0]
+        x2 = vertex2[0]
+        if math.isclose(y1, target_y, rel_tol=1e-7) and math.isclose(y2, target_y, rel_tol=1e-7):
+            if x1 > left and x1< right:
+                length = (vertex1 - vertex2).length
+                edge_lengths.append(length)
             
-        break
     
-    print(f'Count of edges : {edge_count}')
+    total_length = 0
+    
+    for length in edge_lengths:
+        total_length += length
+        
+        
+    # print(f'Function output : {total_length}')
+    
+        
+    return total_length
+    
+    
+    
     
         
 
 
-def calculate_chest(filepath, object_name, bm_1):
+def calculate_chest(filepath, object_name, original_height):
     # print(filepath, object_name)
 
     
@@ -126,17 +145,25 @@ def calculate_chest(filepath, object_name, bm_1):
         
         chest_length =  calculate_edge_lengths(mesh, chest_y, obj)
         
-        # print(chest_length)
-        return chest_length * bm_1
+        print(height)
+        print(chest_length)
+        
+        one_metric = original_height / height
+        
+        
+        return chest_length * one_metric
     
         
         
 
 
 
-path = "C:\\Users\\schai\\OneDrive\\Desktop\\Course Project\\obj_files\\anish.obj"
-object_name = 'anish'
+path = "C:\\Users\\schai\\OneDrive\\Desktop\\Course Project\\obj_files\\chaitanya.obj"
+object_name = 'chaitanya'
 actual_height = 68
+
+
+
 print(calculate_chest(path, object_name, actual_height))
 
 

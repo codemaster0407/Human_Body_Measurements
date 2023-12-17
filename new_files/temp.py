@@ -126,7 +126,7 @@ def calculate_shoulder(filepath, object_name, original_height):
         
         percent_neg = ((0-min_z)/height)
         
-        remaining_percentage = 0.758- percent_neg
+        remaining_percentage = 0.77- percent_neg
         
         shoulder_y = remaining_percentage * height
 
@@ -165,6 +165,6 @@ def calculate_shoulder(filepath, object_name, original_height):
 
 path = "C:\\Users\\schai\\OneDrive\\Desktop\\Course Project\\obj_files\\anish.obj"
 object_name = 'anish'
-actual_height = 68
+actual_height = 69
 
 print(calculate_shoulder(path, object_name, actual_height))
