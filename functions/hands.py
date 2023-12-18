@@ -66,8 +66,8 @@ filepath = "C:\\Users\\sumo\\OneDrive\\Desktop\\Deskotp\\4-1 proj\\Human_Body_Me
 bpy.ops.import_scene.obj(filepath=filepath)
 
 # Specify the object name you want to work with
-object_name = "sreevaatsav"
-#object_name = "sreevaatsav.003"
+#object_name = "sreevaatsav"
+object_name = bpy.context.selected_objects[0].name
 
    
 obj = bpy.data.objects.get(object_name)
@@ -162,31 +162,48 @@ bpy.ops.object.mode_set(mode='OBJECT')
 bpy.ops.object.mode_set(mode='EDIT')
 
 #For right hand bisection
-bpy.ops.mesh.bisect(plane_co=(most_right,0,chest_y), plane_no=(1, 0, 0), clear_inner=False, clear_outer=True)
-
+bpy.ops.mesh.bisect(plane_co=(most_right,0,chest_y), plane_no=(1, 0, 0), clear_inner=True, clear_outer=False)
+bpy.ops.mesh.fill()
 bpy.ops.object.mode_set(mode='OBJECT')
 
+
+#EXPORT
+temppath = "C:\\Users\\sumo\\OneDrive\\Desktop\\Deskotp\\4-1 proj\\newFile.obj"
+obj = bpy.context.active_object
+bpy.ops.export_scene.obj(filepath=temppath, use_selection=True, use_materials=False)
+# Clear existing selection
+bpy.context.selected_objects[0].select_set(False)
+bpy.data.meshes.remove(mesh)
+
 # IMPORT
-bpy.ops.import_scene.obj(filepath=filepath)
-object_name = "sreevastav.001"
-obj = bpy.data.objects.get(object_name)
+bpy.ops.import_scene.obj(filepath=temppath)
+object_name = bpy.context.selected_objects[0].name
+obj1 = bpy.data.objects.get(object_name)
+bpy.context.view_layer.objects.active = bpy.context.scene.objects[object_name]
+
+
+#bpy.context.view_layer.objects.active = obj1
+#obj.select_set(True)
+
+#getting the name of the active object
+#active_object = bpy.context.active_object
+
+#if active_object is not None:
+#    # Print the name of the active object
+#    print("Active Object Name:", active_object.name)
+#else:
+#    print("No active object.")
+
 
 
 # Set the imported object as the active object
-obj = bpy.context.active_object
+obj1 = bpy.context.active_object
 bpy.ops.object.mode_set(mode='EDIT')
 
 
 #For left hand bisection
-bpy.ops.mesh.bisect(plane_co=(most_left,0,chest_y), plane_no=(1, 0, 0), clear_inner=True, clear_outer=False)
+bpy.ops.mesh.bisect(plane_co=(most_left,0,chest_y), plane_no=(1, 0, 0), clear_inner=False, clear_outer=True)
+bpy.ops.mesh.fill()
 
 bpy.ops.object.mode_set(mode='OBJECT')
 print("chest_y: ",chest_y)
-
-
-
-
-
-
-
-
