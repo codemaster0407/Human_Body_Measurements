@@ -1,8 +1,9 @@
 import bpy
 import numpy as np
-
+from cut_rhand import hands
 import math
 import mathutils
+import os
 
 
 
@@ -50,12 +51,15 @@ def hands_slicing(mesh):
 
 
 
+
 def calculate_edge_lengths(mesh, target_y, obj):
+    # count_enter = 0
+    # counter_outer = 0
+    
+    
+    
+    
     edge_lengths = []
-    right, left = hands_slicing(mesh)
-    
-    print(left, right)
-    
     for edge in mesh.edges:
         vertex1 = obj.matrix_world @ mesh.vertices[edge.vertices[0]].co
         vertex2 = obj.matrix_world @ mesh.vertices[edge.vertices[1]].co
@@ -63,14 +67,11 @@ def calculate_edge_lengths(mesh, target_y, obj):
         
         y1 = vertex1[2]
         y2 = vertex2[2]
+    
+        if abs(y1 - target_y) < 0.00001 and abs(y2-target_y) < 0.00001:
         
-        
-        x1 = vertex1[0]
-        x2 = vertex2[0]
-        if math.isclose(y1, target_y, rel_tol=1e-7) and math.isclose(y2, target_y, rel_tol=1e-7):
-            if x1 > left and x1< right:
-                length = (vertex1 - vertex2).length
-                edge_lengths.append(length)
+            length = (vertex1 - vertex2).length
+            edge_lengths.append(length)
             
     
     total_length = 0
@@ -79,7 +80,7 @@ def calculate_edge_lengths(mesh, target_y, obj):
         total_length += length
         
         
-    # print(f'Function output : {total_length}')
+    print(f'Function output : {total_length}')
     
         
     return total_length
@@ -90,13 +91,19 @@ def calculate_edge_lengths(mesh, target_y, obj):
         
 
 
-def calculate_chest(filepath, object_name, original_height):
-    # print(filepath, object_name)
-
+def calculate_chest(filepath, original_height):
     
-    # print(filepath, object_name)
-
+    hands(filepath)
+    
+    if os.listdir('C:\\Users\\schai\\OneDrive\\Desktop\\Course Project\\runtime_folder') == []:
+        print('Hands cutting is not done')
+    else:
+        filepath ='C:\\Users\\schai\\OneDrive\\Desktop\\Course Project\\runtime_folder\\temp.obj'
+        
+        
+    
     bpy.ops.import_scene.obj(filepath=filepath)
+    object_name = bpy.context.selected_objects[0].name
 
 
     
@@ -126,7 +133,7 @@ def calculate_chest(filepath, object_name, original_height):
         percent_neg = ((0-min_z)/height)
         
         
-        remaining_percentage = 0.696- percent_neg
+        remaining_percentage = 0.69- percent_neg
         
         chest_y = remaining_percentage * height
         
@@ -156,16 +163,11 @@ def calculate_chest(filepath, object_name, original_height):
         
         
 
+path = "C:\\Users\\schai\\OneDrive\\Desktop\\Course Project\\obj_files\\anish.obj"
+# object_name = 'chaitanya'
+actual_height = 69
 
-
-path = "C:\\Users\\schai\\OneDrive\\Desktop\\Course Project\\obj_files\\chaitanya.obj"
-object_name = 'chaitanya'
-actual_height = 68
-
-
-
-print(calculate_chest(path, object_name, actual_height))
-
+print(calculate_chest(path, actual_height))
 
 
 
