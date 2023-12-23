@@ -64,27 +64,7 @@ def calculate_edge_lengths(mesh, target_y, obj):
         
     return total_length
             
-            
-
-def hands_slicing(obj):
-    select_vertices = [v for v in obj.data.vertices if v.select]
-
-    most_right = 100
-    most_left = -100
-
-    for v in select_vertices:
-        if(v.co.x > most_left and v.co.x < 0.25):
-            most_left = v.co.x
-            most_left_idx = v.index
-        if(v.co.x < most_right and v.co.x > -0.25):
-            most_right = v.co.x
-            most_right_idx = v.index
-            
-    print("left and right: ",most_left,most_right)
-    print("indexes of the above: ",most_left_idx,most_right_idx)
-    
-    return most_left+-0.03, most_right-0.03
-
+  
 
   
         

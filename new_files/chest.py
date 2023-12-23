@@ -30,27 +30,6 @@ def obj_height(mesh):
 
 
 
-def hands_slicing(mesh):
-    
-    select_vertices = [v for v in mesh.vertices if v.select]
-
-    most_right = 100
-    most_left = -100
-
-    for v in select_vertices:
-        if(v.co.x > most_left and v.co.x < 0.25):
-            most_left = v.co.x
-            most_left_idx = v.index
-        if(v.co.x < most_right and v.co.x > -0.25):
-            most_right = v.co.x
-            most_right_idx = v.index
-            
-            
-    
-    return most_left-0.03, most_right+0.03
-
-
-
 
 def calculate_edge_lengths(mesh, target_y, obj):
     # count_enter = 0

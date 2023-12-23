@@ -1,5 +1,3 @@
-import bpy
-import numpy as np
 
 import math
 import mathutils
@@ -9,20 +7,6 @@ import mathutils
 import bpy
 import numpy as np
 
-# def find_extreme_points_width(object_name, y_value):
-#     mesh = bpy.data.objects[object_name].data
-#     vertices = np.array([v.co for v in mesh.vertices if abs(v.co.y - y_value) <= 0.001])
-#     # print(vertices)
-#     leftmost_point = np.min(vertices[:, 0])
-#     rightmost_point = np.max(vertices[:, 0])
-#     return leftmost_point, rightmost_point
-
-# def find_extreme_points(object_name):
-#     mesh = bpy.data.objects[object_name].data
-#     vertices = np.array([v.co for v in mesh.vertices])
-#     highest_point = np.max(vertices, axis=0)
-#     lowest_point = np.min(vertices, axis=0)
-#     return highest_point, lowest_point
 
 
 def obj_height(mesh):
@@ -176,18 +160,6 @@ def hands(path, object_name,temppath):
     bpy.context.view_layer.objects.active = bpy.context.scene.objects[object_name]
 
 
-    #bpy.context.view_layer.objects.active = obj1
-    #obj.select_set(True)
-
-    #getting the name of the active object
-    #active_object = bpy.context.active_object
-
-    #if active_object is not None:
-    #    # Print the name of the active object
-    #    print("Active Object Name:", active_object.name)
-    #else:
-    #    print("No active object.")
-
 
 
     # Set the imported object as the active object
@@ -200,154 +172,4 @@ def hands(path, object_name,temppath):
     bpy.ops.mesh.fill()
 
     bpy.ops.object.mode_set(mode='OBJECT')
-    print("chest_y: ",chest_y)
-
-            
-
-            
-    for i in range(len(vertices)):
-        same_plane_pts[vertices[i][0]].append(np.array(vertices[i]))
-        
-    keys = list(same_plane_pts.keys())
-
-    arm_edges = 0
-    for i in range(len(same_plane_pts)):
-        if len(same_plane_pts[keys[i]]) > 50 and keys[i] == right_most :
-            arm_edges = len(same_plane_pts[keys[i]]) 
-            # print(keys[i])
-            
-    # print(arm_edges)
-    edge_length = 0.1118421052631579
-    print('Circumference of the right bicep is ' , arm_edges * edge_length)
-    original_right = 14.5
-
-    print('error between original and predicted' , original_right - (arm_edges * edge_length))
-
-
-
-# Set the file path to your OBJ file
-filepath = "C:\\Users\\sumo\\OneDrive\\Desktop\\Deskotp\\4-1 proj\\Human_Body_Measurements\\obj_files\\sreevaatsav.obj"
-
-# Import the OBJ file
-bpy.ops.import_scene.obj(filepath=filepath)
-object_name = bpy.context.selected_objects[0].name
-obj = bpy.data.objects.get(object_name)
-
-# Check if the object exists
-if obj is not None:
-    bpy.context.view_layer.objects.active = obj
-
-    # Switch to OBJECT mode (in case you're not already in that mode)
-    bpy.ops.object.mode_set(mode='OBJECT')
-        
-    # bbox = [obj.matrix_world @ mathutils.Vector(corner) for corner in obj.bound_box]
-        
-    # lowest_point = min(bbox, key=lambda v: v.z)
-    # translation_vector = mathutils.Vector((0,0,0)) - lowest_point
-    # obj.location += translation_vector
-        
-    mesh = obj.data
-    height, max_z, min_z = obj_height(mesh)
-    
-    # print(height)
-    # print(0-min_z)
-    
-    # print(((0-min_z)/height)*100)
-    
-    percent_neg = ((0-min_z)/height)
-    remaining_percentage = 0.75- percent_neg
-    chest_y = remaining_percentage * height
-
-    obj = bpy.data.objects.get(object_name)
-    bpy.ops.object.mode_set(mode='EDIT')
-    bpy.ops.mesh.bisect(plane_co=(0,-0.15, 0), plane_no=(0, 0, 1), clear_inner=False, clear_outer=False)
-
-    bpy.ops.object.mode_set(mode='OBJECT')
-    
-    bbox = [obj.matrix_world @ mathutils.Vector(corner) for corner in obj.bound_box]
-        
-    lowest_y = min(bbox, key=lambda v: v.z)
-#    print(lowest_y[2])
-    
-#    print(type(lowest_y))
-
-    
-#    print(chest_y, lowest_y[2])
-    
-    
-    calculate_edge_lengths(mesh, lowest_y[2])
-
-else:
-    print(f"Object '{object_name}' not found.")
-
-select_vertices = [v for v in obj.data.vertices if v.select]
-
-
-most_right = 100
-most_left = -100
-
-for v in select_vertices:
-    if(v.co.x > most_left and v.co.x < 0.25):
-        most_left = v.co.x
-        most_left_idx = v.index
-    if(v.co.x < most_right and v.co.x > -0.25):
-        most_right = v.co.x
-        most_right_idx = v.index
-        
-print("left and right: ",most_left,most_right)
-print("indexes of the above: ",most_left_idx,most_right_idx)
-
-
-bpy.context.view_layer.objects.active = obj
-bpy.ops.object.mode_set(mode='EDIT')
-bpy.ops.mesh.select_all(action='SELECT')
-bpy.ops.object.mode_set(mode='OBJECT')
-
-bpy.ops.object.mode_set(mode='EDIT')
-
-#For right hand bisection
-bpy.ops.mesh.bisect(plane_co=(most_right,0,chest_y), plane_no=(1, 0, 0), clear_inner=True, clear_outer=False)
-bpy.ops.mesh.fill()
-bpy.ops.object.mode_set(mode='OBJECT')
-
-
-#EXPORT
-temppath = "C:\\Users\\sumo\\OneDrive\\Desktop\\Deskotp\\4-1 proj\\newFile.obj"
-obj = bpy.context.active_object
-bpy.ops.export_scene.obj(filepath=temppath, use_selection=True, use_materials=False)
-# Clear existing selection
-bpy.context.selected_objects[0].select_set(False)
-bpy.data.meshes.remove(mesh)
-
-# IMPORT
-bpy.ops.import_scene.obj(filepath=temppath)
-object_name = bpy.context.selected_objects[0].name
-obj1 = bpy.data.objects.get(object_name)
-bpy.context.view_layer.objects.active = bpy.context.scene.objects[object_name]
-
-
-#bpy.context.view_layer.objects.active = obj1
-#obj.select_set(True)
-
-#getting the name of the active object
-#active_object = bpy.context.active_object
-
-#if active_object is not None:
-#    # Print the name of the active object
-#    print("Active Object Name:", active_object.name)
-#else:
-#    print("No active object.")
-
-
-
-# Set the imported object as the active object
-obj1 = bpy.context.active_object
-bpy.ops.object.mode_set(mode='EDIT')
-
-
-#For left hand bisection
-bpy.ops.mesh.bisect(plane_co=(most_left,0,chest_y), plane_no=(1, 0, 0), clear_inner=False, clear_outer=True)
-bpy.ops.mesh.fill()
-
-bpy.ops.object.mode_set(mode='OBJECT')
-print("chest_y: ",chest_y)
+    print('EXPORT DONE')
