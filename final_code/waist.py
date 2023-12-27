@@ -57,14 +57,16 @@ def calculate_chest(filepath, original_height):
         percent_neg = ((0-min_z)/height)
         
         
-        remaining_percentage = 0.5- percent_neg
+        # remaining_percentage = 0.5 - percent_neg 
+        # print(remaining_percentage)
         
-        chest_y = remaining_percentage * height
+        # chest_y = remaining_percentage * height
+        waist_y = 0
         
         
         obj = bpy.data.objects.get(object_name)
         bpy.ops.object.mode_set(mode='EDIT')
-        bpy.ops.mesh.bisect(plane_co=(19,19, chest_y), plane_no=(0, 0, 1), clear_inner=True, clear_outer=False)
+        bpy.ops.mesh.bisect(plane_co=(19,19, waist_y), plane_no=(0, 0, 1), clear_inner=True, clear_outer=False)
 
         bpy.ops.object.mode_set(mode='OBJECT')
         
@@ -74,13 +76,13 @@ def calculate_chest(filepath, original_height):
         
 
         
-        waist_length =  calculate_edge_lengths(mesh, chest_y, obj)
+        waist_length =  calculate_edge_lengths(mesh, waist_y, obj)
         
        
         
         one_metric = original_height / height
         
-        os.remove(filepath)
+        # os.remove(filepath)
         
         
         return waist_length * one_metric
@@ -88,11 +90,11 @@ def calculate_chest(filepath, original_height):
         
         
 
-# path = "C:\\Users\\schai\\OneDrive\\Desktop\\Course Project\\obj_files\\chaitanya.obj"
-# # object_name = 'chaitanya'
-# actual_height = 69
+path = "C:\\Users\\schai\\OneDrive\\Desktop\\Course Project\\obj_files\\srikar.obj"
+# object_name = 'chaitanya'
+actual_height = 73
 
-# print(calculate_chest(path, actual_height))
+print(calculate_chest(path, actual_height))
 
 
 

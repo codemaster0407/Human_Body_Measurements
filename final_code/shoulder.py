@@ -77,8 +77,7 @@ def calculate_shoulder(filepath, original_height):
         
         
         one_metric = original_height / height
-        
-        
+       
         return shoulder_length * one_metric
         
         
@@ -88,8 +87,8 @@ def calculate_shoulder(filepath, original_height):
 
 
 
-path = "C:\\Users\\schai\\OneDrive\\Desktop\\Course Project\\obj_files\\chaitanya.obj"
-object_name = 'chaitanya'
-actual_height = 69
+path = "C:\\Users\\schai\\OneDrive\\Desktop\\Course Project\\obj_files\\srinath.obj"
+# object_name = 'sreevaatsav'
+actual_height = 72
 
 print(calculate_shoulder(path, actual_height))
