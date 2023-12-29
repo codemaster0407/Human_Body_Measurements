@@ -82,7 +82,7 @@ def calculate_chest(filepath, original_height):
         
         one_metric = original_height / height
         
-        # os.remove(filepath)
+        os.remove(filepath)
         
         
         return waist_length * one_metric
@@ -90,11 +90,11 @@ def calculate_chest(filepath, original_height):
         
         
 
-path = "C:\\Users\\schai\\OneDrive\\Desktop\\Course Project\\obj_files\\srikar.obj"
-# object_name = 'chaitanya'
-actual_height = 73
+# path = "C:\\Users\\schai\\OneDrive\\Desktop\\Course Project\\obj_files\\srikar.obj"
+# # object_name = 'chaitanya'
+# actual_height = 73
 
-print(calculate_chest(path, actual_height))
+# print(calculate_chest(path, actual_height))
 
 
 

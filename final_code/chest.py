@@ -53,7 +53,7 @@ def calculate_chest(filepath, original_height):
         percent_neg = ((0-min_z)/height)
         
         
-        remaining_percentage = 0.70- percent_neg
+        remaining_percentage = 0.70 - percent_neg
         
         chest_y = remaining_percentage * height
         
@@ -71,12 +71,10 @@ def calculate_chest(filepath, original_height):
 
         
         chest_length =  calculate_edge_lengths(mesh, chest_y, obj)
-        
-        # print(height)
-        # print(chest_length)
+   
         
         one_metric = original_height / height
-        os.remove(filepath)
+        # os.remove(filepath)
         
         return chest_length * one_metric
     
@@ -84,7 +82,7 @@ def calculate_chest(filepath, original_height):
         
 
 path = "C:\\Users\\schai\\OneDrive\\Desktop\\Course Project\\obj_files\\srikar.obj"
-# # object_name = 'chaitanya'
+
 actual_height = 73
 print(calculate_chest(path, actual_height))
 
