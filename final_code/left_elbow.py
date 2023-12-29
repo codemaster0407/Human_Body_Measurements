@@ -70,7 +70,7 @@ def calculate_shoulder(filepath, original_height):
         
 #        bpy.ops.object.mode_set(mode='OBJECT')
         bpy.ops.mesh.select_all(action = "SELECT")
-        bpy.ops.mesh.bisect(plane_co=(0.2,0,0), plane_no=(1, 0, 0), clear_inner=False, clear_outer=True)
+        bpy.ops.mesh.bisect(plane_co=(0.2,0,0), plane_no=(1, 0, 0), clear_inner=True, clear_outer=False)
 
         bpy.ops.object.mode_set(mode='OBJECT')
         
