@@ -377,7 +377,9 @@ This project is licensed under the **Eclipse Public License v2.0** - see the [LI
 
 ## 👥 Authors
 
-Undergraduate Project Team  
+Chaitanya Srikanth
+Pradham Mummaleti
+Sumanthra Rao 
 Course Project on Human Body Measurements
 
 ---
